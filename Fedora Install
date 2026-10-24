@@ -1,0 +1,36 @@
+Fedora Install 
+
+#Disk partitioning
+
+/boot/efi   1G  EFISystem Partition
+/boot   2G  ext4
+/   17G BTRFS
+/home   17G BTRFS
+
+sudo dnf upgrade --refresh
+sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf config-manager setopt rpmfusion-free-updates-testing.enabled=1 rpmfusion-nonfree-updates-testing.enabled=1
+sudo dnf install rpmfusion-free-release-tainted
+sudo dnf install rpmfusion-nonfree-release-tainted
+sudo dnf install gcc make pkgconf-pkg-config libX11-devel libxcb-devel xcb-util-devel libXinerama-devel libXrender-devel libXft-devel freetype-devel fontconfig-devel imlib2-devel curl git unzip xorg-x11-server-Xorg xorg-x11-xinit picom feh dbus-x11 lightdm slick-greeter kitty light-locker pipewire wireplumber pipewire-pulseaudio alsa-utils pulseaudio-utils pavucontrol NetworkManager NetworkManager-wifi xrandr xset xsetroot xinput setxkbmap xkbset xorg-x11-drv-libinput mate-polkit Thunar gvfs gvfs-smb tumbler thunar-archive-plugin file-roller xdg-user-dirs xdg-utils desktop-file-utils celluloid mpv sxiv xclip xdotool xprop xdg-desktop-portal-gtk xsettingsd dconf qt6ct qt5ct adwaita-icon-theme papirus-icon-theme google-noto-color-emoji-fonts google-noto-sans-mono-fonts dbus-tools procps-ng psmisc util-linux rsync tar dracut-network grub2-pc grub2-pc-modules grub2-efi-x64 shim-x64 lvm2 cryptsetup btrfs-progs xfsprogs e2fsprogs mdadm dosfstools gnome-keyring gnome-keyring-pam rofi patch
+
+# Enable Lightdm service to make it start on boot
+	sudo systemctl enable lightdm
+	sudo systemctl set-default graphical.target
+
+# Make xsessions dir
+	sudo mkdir /usr/share/xsessions
+
+# Creating DWM session
+	sudo vim /usr/share/xsessions/dwm.desktop
+
+# Example dwm.desktop
+	[Desktop Entry]
+	Encoding=UTF-8
+	Name=dwm
+	Comment=Dynamic window manager
+	Exec=dwm
+	Icon=dwm
+	Type=XSession
